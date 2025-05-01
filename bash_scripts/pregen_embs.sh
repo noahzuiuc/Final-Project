@@ -6,10 +6,10 @@
 #SBATCH --mem 85gb
 
 set -e
-source activate hurtfulwords
+#source activate hurtfulwords
 
-BASE_DIR="/h/haoran/projects/HurtfulWords"
-OUTPUT_DIR="/h/haoran/projects/HurtfulWords/data/"
+BASE_DIR="/c/Users/noahz/Downloads/HurtfulWords"
+OUTPUT_DIR="/c/Users/noahz/Downloads/HurtfulWords/data/"
 cd "$BASE_DIR/scripts"
 mkdir -p "$OUTPUT_DIR/pregen_embs/"
 emb_method='cat4'

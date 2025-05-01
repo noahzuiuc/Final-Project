@@ -5,11 +5,11 @@
 #SBATCH --output train_baseline.log
 #SBATCH --mem 200gb
 set -e
-source activate hurtfulwords
+#source activate hurtfulwords
 
-BASE_DIR="/h/haoran/projects/HurtfulWords"
-OUTPUT_DIR="/h/haoran/projects/HurtfulWords/data/"
-SCIBERT_DIR="/scratch/gobi1/haoran/shared_data/BERT_DeBias/models/SciBERT"
+BASE_DIR="/c/Users/noahz/Downloads/HurtfulWords"
+OUTPUT_DIR="/c/Users/noahz/Downloads/HurtfulWords/data"
+SCIBERT_DIR="/c/Users/noahz/Downloads/baseline_clinical_BERT_1_epoch_512"
 mkdir -p "$OUTPUT_DIR/models/"
 
 cd "$BASE_DIR/scripts" 
@@ -20,7 +20,7 @@ python finetune_on_pregenerated.py \
 	--bert_model "$SCIBERT_DIR" \
 	--do_lower_case \
 	--epochs 1 \
-	--train_batch_size 32\
+	--train_batch_size 16\
 	--seed 123
 
 python finetune_on_pregenerated.py \

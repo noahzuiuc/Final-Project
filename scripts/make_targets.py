@@ -39,7 +39,7 @@ df = df[~pd.isnull(df['oasis'])]
 MAX_AGG_SEQUENCE_LENGTH = Constants.MAX_AGG_SEQUENCE_LEN
 
 root_folder = args.mimic_benchmark_dir/'root/'
-other_features = ['age', 'oasis', 'oasis_prob', 'sofa', 'sapsii', 'sapsii_prob']
+other_features = ['age', 'oasis', 'oasis_prob', 'sofa_score', 'sapsii', 'sapsii_prob']
 
 '''
 In-Hospital Mortality
@@ -165,7 +165,7 @@ phenotypes: Any acute, Any chronic, Any disease
 '''
 
 with open('../icd9_codes.yml', 'r') as f:
-    ccs = pd.DataFrame.from_dict(yaml.load(f)).T
+    ccs = pd.DataFrame.from_dict(yaml.load(f, Loader=yaml.SafeLoader)).T
 
 target_names = list(pd.read_csv(os.path.join(root_folder, 'phenotype_labels.csv')).columns)
 acutes = [i for i in target_names if ccs.loc[i, 'type'] == 'acute']

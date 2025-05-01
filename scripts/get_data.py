@@ -10,7 +10,7 @@ from pathlib import Path
 output_folder = Path(sys.argv[1])
 output_folder.mkdir(parents = True, exist_ok = True)
 
-conn = psycopg2.connect('dbname=mimic user=haoran host=mimic password=password')
+conn = psycopg2.connect('dbname=mimic user=noah host=localhost password=050101')
 
 pats = pd.read_sql_query('''
 select subject_id, gender, dob, dod from mimiciii.patients
@@ -79,7 +79,9 @@ df = df[df.chartdate >= df.dob]
 
 ages = []
 for i in range(df.shape[0]):
-    ages.append((df.chartdate.iloc[i] - df.dob.iloc[i]).days/365.24)
+    ages.append(
+    (df.chartdate.iloc[i].to_pydatetime() - df.dob.iloc[i].to_pydatetime()).days / 365.24
+    )
 df['age'] = ages
 
 df.loc[(df.category == 'Discharge summary') |
@@ -107,7 +109,7 @@ for i in Constants.groups:
 
 acuities = pd.read_sql_query('''
 select * from (
-select a.subject_id, a.hadm_id, a.icustay_id, a.oasis, a.oasis_prob, b.sofa from
+select a.subject_id, a.hadm_id, a.icustay_id, a.oasis, a.oasis_prob, b.sofa_score from
 (mimiciii.oasis a
 natural join mimiciii.sofa b )) ab
 natural join
@@ -121,17 +123,21 @@ from mimiciii.icustays
 ''', conn).set_index(['subject_id','hadm_id'])
 
 def fill_icustay(row):
-    opts = icustays.loc[[row['subject_id'],row['hadm_id']]]
-    if pd.isnull(row['charttime']):
-        charttime = row['chartdate'] + pd.Timedelta(days = 2)
-    else:
-        charttime = row['charttime']
-    stay = opts[(opts['intime'] <= charttime)].sort_values(by = 'intime', ascending = True)
+    try:
+        opts = icustays.loc[(row['subject_id'], row['hadm_id'])]
+        if pd.isnull(row['charttime']):
+            charttime = row['chartdate'] + pd.Timedelta(days = 2)
+        else:
+            charttime = row['charttime']
+        stay = opts[(opts['intime'] <= charttime)].sort_values(by = 'intime', ascending = True)
 
-    if len(stay) == 0:
+        if len(stay) == 0:
+            return None
+            #print(row['subject_id'], row['hadm_id'], row['category'])
+        return stay.iloc[-1]['icustay_id']
+    except KeyError:
+        print(f"Subject ID: {row['subject_id']}\nHADM ID: {row['hadm_id']}")
         return None
-        #print(row['subject_id'], row['hadm_id'], row['category'])
-    return stay.iloc[-1]['icustay_id']
 
 df['icustay_id'] = df[df.category.isin(['Discharge summary','Physician ','Nursing','Nursing/other'])].apply(fill_icustay, axis = 1)
 

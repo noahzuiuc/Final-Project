@@ -5,11 +5,11 @@
 #SBATCH --output train_adv%A.log
 #SBATCH --mem 160gb
 set -e
-source activate hurtfulwords
+#source activate hurtfulwords
 
-BASE_DIR="/h/haoran/projects/HurtfulWords"
-OUTPUT_DIR="/scratch/hdd001/home/haoran/shared_data/BERT_DeBias/data/"
-SCIBERT_DIR="/scratch/hdd001/home/haoran/shared_data/BERT_DeBias/models/SciBERT"
+BASE_DIR="/c/Users/noahz/Downloads/HurtfulWords"
+OUTPUT_DIR="/c/Users/noahz/Downloads/HurtfulWords/data"
+SCIBERT_DIR="/c/Users/noahz/Downloads/baseline_clinical_BERT_1_epoch_512"
 mkdir -p "$OUTPUT_DIR/models/"
 DOMAIN="$1"
 
@@ -21,7 +21,7 @@ python adversarial_finetune_on_pregen.py \
 	--bert_model "$SCIBERT_DIR" \
 	--do_lower_case \
 	--epochs 1 \
-	--train_batch_size 64\
+	--train_batch_size 16\
 	--seed 123 \
 	--domain_of_interest "$DOMAIN" \
 	--lambda_ 1.0 \

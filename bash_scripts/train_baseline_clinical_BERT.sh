@@ -9,7 +9,7 @@ set -e
 
 BASE_DIR="/c/Users/noahz/Downloads/HurtfulWords"
 OUTPUT_DIR="/c/Users/noahz/Downloads/HurtfulWords/data"
-SCIBERT_DIR="/c/Users/noahz/Downloads/baseline_clinical_BERT_1_epoch_512"
+SCIBERT_DIR="/c/Users/noahz/Downloads/HurtfulWords/data/models/baseline_clinical_BERT_1_epoch_512"
 mkdir -p "$OUTPUT_DIR/models/"
 
 cd "$BASE_DIR/scripts" 

@@ -20,8 +20,25 @@ The pretrained BERT models used in our experiments are available to download her
 
 ## Step 0: Environment and Prerequisites
 - Before starting, go to the [MIMIC-benchmarks repository](https://github.com/YerevaNN/mimic3-benchmarks), and follow all of the steps in the `Building a benchmark` section.
-- Run the following commands to clone this repo and create the Conda environment
+- You must also create a PostgreSQL database following [this guide](https://mimic.mit.edu/docs/gettingstarted/local/install-mimic-locally-windows).
+- You must then add the OASIS, SAPS II, and SOFA scores using the files in the severity_scores folder. They must be run in the following order:  
+```bash
+\i gcs_first_day.sql  
+\i vitals_first_day.sql  
+\i urine_output_first_day.sql  
+\i ventilation_classification.sql  
+\i ventilation_durations.sql  
+\i ventilation_first_day.sql  
+\i oasis.sql  
+\i blood_gas_first_day.sql  
+\i blood_gas_first_day_arterial.sql  
+\i labs_first_day.sql  
+\i sapsii.sql  
+\i echo_data.sql  
+\i sofa.sql
 ```
+- Run the following commands to clone this repo and create the Conda environment
+```bash
 git clone https://github.com/MLforHealth/HurtfulWords.git
 cd HurtfulWords/
 conda create -y -n hurtfulwords python=3.7

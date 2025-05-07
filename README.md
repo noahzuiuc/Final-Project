@@ -39,8 +39,8 @@ The pretrained BERT models used in our experiments are available to download her
 ```
 - Run the following commands to clone this repo and create the Conda environment
 ```bash
-git clone https://github.com/MLforHealth/HurtfulWords.git
-cd HurtfulWords/
+git clone https://github.com/noahzuiuc/Final-Project.git
+cd Final-Project
 conda create -y -n hurtfulwords python=3.7
 conda activate hurtfulwords
 pip install -r requirements.txt

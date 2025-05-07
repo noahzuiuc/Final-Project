@@ -44,6 +44,8 @@ cd HurtfulWords/
 conda create -y -n hurtfulwords python=3.7
 conda activate hurtfulwords
 pip install -r requirements.txt
+conda install -c conda-forge nmslib
+conda install pytorch==1.5.1 torchvision==0.6.1 cudatoolkit=10.2 -c pytorch
 ```
 
 ## Step 1: Data processing

@@ -21,6 +21,8 @@ tokenizer = BertTokenizer.from_pretrained(args.model_path)
 model = BertModel.from_pretrained(args.model_path)
 
 df = pd.read_pickle(args.input_loc)
+n_rows = int(len(df) * 0.05)
+df = df.head(n_rows)
 
 '''
 Code taken from https://github.com/EmilyAlsentzer/clinicalBERT

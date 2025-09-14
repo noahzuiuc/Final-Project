@@ -5,13 +5,13 @@
 #SBATCH --output=data_processing_%A.out
 #SBATCH --mem 300gb
 set -e
-source activate hurtfulwords
+#source activate hurtfulwords
 
-BASE_DIR="/h/haoran/projects/HurtfulWords/"
-OUTPUT_DIR="/h/haoran/projects/HurtfulWords/data/"
+BASE_DIR="/c/Users/noahz/Downloads/HurtfulWords"
+OUTPUT_DIR="/c/Users/noahz/Downloads/HurtfulWords/data"
 mkdir -p "$OUTPUT_DIR/finetuning/"
-SCIBERT_DIR="/scratch/gobi1/haoran/shared_data/BERT_DeBias/models/SciBERT"
-MIMIC_BENCHMARK_DIR="/scratch/gobi2/haoran/shared_data/MIMIC_benchmarks/"
+SCIBERT_DIR="/c/Users/noahz/Downloads/baseline_clinical_BERT_1_epoch_512"
+MIMIC_BENCHMARK_DIR="/c/Users/noahz/Downloads/mimic3-benchmarks/data"
 
 cd "$BASE_DIR/scripts/"
 

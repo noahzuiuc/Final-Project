@@ -8,7 +8,7 @@ import random
 # CONFIGURATIONS
 ###########################
 
-SCIBERT_DIR = Path('/scratch/hdd001/home/haoran/shared_data/scibert_scivocab_uncased/')
+SCIBERT_DIR = Path('C:/Users/noahz/Downloads/HurtfulWords/data/models/baseline_clinical_BERT_1_epoch_512')
 
 RACE_LIST = ['caucasian', 'hispanic', 'african', 'african american', 'white']
 ###########################

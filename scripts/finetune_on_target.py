@@ -41,7 +41,7 @@ parser.add_argument('--es_patience', help = 'patience for the early stopping', t
 parser.add_argument('--other_fields', help = 'other fields to add, must be columns in df', nargs = '+', type = str, dest = 'other_fields', default = [])
 parser.add_argument('--seed', type = int, default = 42, help = 'random seed for initialization')
 parser.add_argument('--dropout', type = float, default = 0, help = 'dropout probability for classifier')
-parser.add_argument('--lr', type = float, default = 5e-4, help = 'learning rate for BertAdam optimizer')
+parser.add_argument('--lr', type = float, default = 5e-5, help = 'learning rate for BertAdam optimizer')
 parser.add_argument('--predictor_layers', type = int, default = 2, help = 'number of layers for classifier, ignored if gridsearch_classifier')
 parser.add_argument('--emb_method', default = 'last', const = 'last', nargs = '?', choices = ['last', 'sum4', 'cat4'], help = 'what embedding layer to take')
 parser.add_argument('--fairness_def', default = 'demo', const = 'demo', nargs = '?', choices = ['demo', 'odds'], help = 'what fairness definition to use: demographic parity, equality of odds')
@@ -192,7 +192,7 @@ class Discriminator(nn.Module):
 if args.gridsearch_classifier:
     assert(args.freeze_bert)
     grid = list(ParameterGrid({
-        'num_layers': [2,3,4],
+        'num_layers': [1],
         'dropout_prob': [0, 0.2],
         'decay_rate': [2,4,6]
     }))
@@ -233,7 +233,7 @@ if n_gpu > 0:
     torch.cuda.manual_seed_all(seed)
 
 if args.task_type == 'binary':
-    criterion = nn.BCELoss()
+    criterion = nn.BCEWithLogitsLoss()
 elif args.task_type == 'multiclass':
     criterion = nn.CrossEntropyLoss()
 elif args.task_type == 'regression':

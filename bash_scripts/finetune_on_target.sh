@@ -10,10 +10,10 @@
 # $3 - target column name within the dataframe, ex: "Shock", "any_acute"
 
 set -e 
-source activate hurtfulwords
+#source activate hurtfulwords
 
-BASE_DIR="/h/haoran/projects/HurtfulWords"
-OUTPUT_DIR="/scratch/hdd001/home/haoran/shared_data/HurtfulWords/data"
+BASE_DIR="/c/Users/noahz/Downloads/HurtfulWords"
+OUTPUT_DIR="/c/Users/noahz/Downloads/HurtfulWords/data"
 
 cd "$BASE_DIR/scripts"
 
@@ -24,10 +24,10 @@ python finetune_on_target.py \
 	--target_col_name "$3" \
 	--output_dir "${OUTPUT_DIR}/models/finetuned/${1}_${2}_${3}/" \
 	--freeze_bert \
-	--train_batch_size 32 \
+	--train_batch_size 2 \
 	--pregen_emb_path "${OUTPUT_DIR}/pregen_embs/pregen_${2}_cat4_${1}" \
 	--task_type binary \
-	--other_fields age sofa sapsii_prob sapsii_prob oasis oasis_prob \
+	--other_fields age sofa_score sapsii_prob oasis oasis_prob \
         --gridsearch_classifier \
         --gridsearch_c \
         --emb_method cat4
